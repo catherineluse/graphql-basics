@@ -1,6 +1,6 @@
 import uuidv4 from "uuid/v4";
 import users from "../../data/users";
-import posts from "../../data/posts";
+import discussions from "../../data/discussions";
 import comments from "../../data/comments";
 
 function checkThatUserExists(id) {
@@ -10,11 +10,11 @@ function checkThatUserExists(id) {
     throw new Error("User not found");
   }
 }
-function checkThatPostExists(id) {
-  const postExists = posts.some(post => post.id === id);
+function checkThatDiscussionExists(id) {
+  const discussionExists = discussions.some(discussion => discussion.id === id);
 
-  if (!postExists) {
-    throw new Error("Post not found");
+  if (!discussionExists) {
+    throw new Error("Discussion not found");
   }
 }
 
@@ -39,37 +39,37 @@ const mutationResolvers = {
         id: uuidv4(),
         ...args.data,
         comments: [],
-        posts: []
+        discussions: []
       };
 
       users.push(user);
 
       return user;
     },
-    createPost(parent, args, ctx, info) {
+    createDiscussion(parent, args, ctx, info) {
       const { author, title, body, published } = args.data;
       if (!author || !title || !body || published === undefined) {
-        throw new Error("Invalid arguments passed to creatPost");
+        throw new Error("Invalid arguments passed to creatDiscussion");
       }
       checkThatUserExists(author);
 
-      const post = {
+      const discussion = {
         id: uuidv4(),
         ...args.data
       };
 
-      posts.push(post);
+      discussions.push(discussion);
 
-      return post;
+      return discussion;
     },
     createComment(parent, args, ctx, info) {
-      const { text, author, post } = args.data;
+      const { text, author, discussion } = args.data;
 
-      if (!text || !author || !post) {
+      if (!text || !author || !discussion) {
         throw new Error("Invalid arguments to createComment");
       }
       checkThatUserExists(author);
-      checkThatPostExists(post);
+      checkThatDiscussionExists(discussion);
 
       const comment = {
         id: uuidv4(),

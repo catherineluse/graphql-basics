@@ -1,7 +1,7 @@
 const queryTypes = `
 type Query {
     users(query: String): [User!]!
-    posts(query: String): [Post!]!
+    discussions(query: String): [Discussion!]!
     comments(query: String): [Comment!]!
 }
 
@@ -10,11 +10,11 @@ type User {
     name: String!
     email: String!
     age: Int
-    posts: [Post]!
+    discussions: [Discussion]!
     comments: [Comment]!
 }
 
-type Post {
+type Discussion {
   id: ID!
   title: String!
   body: String!
@@ -27,8 +27,10 @@ type Comment {
   id: ID!
   text: String!
   author: User!
-  post: Post!
-}  
+  discussion: Discussion!
+  parentCommentId: ID
+  childComments: [Comment]
+}
 `;
 
 export default queryTypes;

@@ -1,25 +1,25 @@
-const posts = [
+const discussions = [
   {
     id: "1",
-    title: "cat post",
+    title: "cat discussion",
     body: "cats cats cats",
     published: true,
     author: "1"
   },
   {
     id: "2",
-    title: "dog post",
+    title: "dog discussion",
     body: "dogs only",
     published: true,
     author: "1"
   },
   {
     id: "3",
-    title: "special post",
+    title: "special discussion",
     body: "secret",
     published: false,
     author: "2"
   }
 ];
 
-export default posts;
+export default discussions;

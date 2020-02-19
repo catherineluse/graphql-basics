@@ -1,11 +1,11 @@
-import posts from "../../data/posts";
+import discussions from "../../data/discussions";
 import comments from "../../data/comments";
 
 const userResolvers = {
   User: {
-    posts(parent, args, ctx, info) {
-      return posts.filter(post => {
-        return post.author === parent.id;
+    discussions(parent, args, ctx, info) {
+      return discussions.filter(discussion => {
+        return discussion.author === parent.id;
       });
     },
     comments(parent, args, ctx, info) {

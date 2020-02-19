@@ -1,8 +1,8 @@
 import users from "../../data/users";
 import comments from "../../data/comments";
 
-const postResolvers = {
-  Post: {
+const discussionResolvers = {
+  Discussion: {
     author(parent, args, ctx, info) {
       return users.find(user => {
         return user.id === parent.author;
@@ -10,10 +10,10 @@ const postResolvers = {
     },
     comments(parent, args, ctx, info) {
       return comments.filter(comment => {
-        return comment.post === parent.id;
+        return comment.discussion === parent.id;
       });
     }
   }
 };
 
-export default postResolvers;
+export default discussionResolvers;

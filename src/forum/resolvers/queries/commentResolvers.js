@@ -1,5 +1,6 @@
 import users from "../../data/users";
-import posts from "../../data/posts";
+import discussions from "../../data/discussions";
+import comments from "../../data/comments";
 
 const commentResolvers = {
   Comment: {
@@ -8,10 +9,30 @@ const commentResolvers = {
         return parent.author === user.id;
       });
     },
-    post(parent, args, ctx, info) {
-      return posts.find(post => {
-        return parent.post === post.id;
+    discussion(parent, args, ctx, info) {
+      return discussions.find(discussion => {
+        return parent.discussion === discussion.id;
       });
+    },
+    childComments(parent, args, ctx, info) {
+      let childIds = parent.childComments;
+
+      if (!parent || !childIds) {
+        return null;
+      }
+
+      let children = [];
+
+      childIds.forEach(id => {
+        for (let i = 0; i < comments.length; i++) {
+          let comment = comments[i];
+          if (comment.id === id) {
+            children.push(comment);
+            return;
+          }
+        }
+      });
+      return children;
     }
   }
 };

@@ -1,20 +1,20 @@
 import commentResolvers from "./commentResolvers";
-import postResolvers from "./postResolvers";
+import discussionResolvers from "./discussionResolvers";
 import userResolvers from "./userResolvers";
-import posts from "../../data/posts";
+import discussions from "../../data/discussions";
 import users from "../../data/users";
 import comments from "../../data/comments";
 
 const resolvers = {
   Query: {
-    posts(parent, args, ctx, info) {
+    discussions(parent, args, ctx, info) {
       if (!args.query) {
-        return posts;
+        return discussions;
       }
-      return posts.filter(post => {
+      return discussions.filter(discussion => {
         return (
-          post.title.indexOf(args.query) !== -1 ||
-          post.body.indexOf(args.query) !== -1
+          discussion.title.indexOf(args.query) !== -1 ||
+          discussion.body.indexOf(args.query) !== -1
         );
       });
     },
@@ -41,7 +41,7 @@ const resolvers = {
 const queryResolvers = {
   ...resolvers,
   ...commentResolvers,
-  ...postResolvers,
+  ...discussionResolvers,
   ...userResolvers
 };
 

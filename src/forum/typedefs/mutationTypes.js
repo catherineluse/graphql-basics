@@ -1,7 +1,7 @@
 const mutationTypes = `
     type Mutation {
         createUser(data: CreateUserInput): User!
-        createPost(data: CreatePostInput): Post!
+        createDiscussion(data: CreateDiscussionInput): Discussion!
         createComment(data: CreateCommentInput): Comment!
     }
 `;

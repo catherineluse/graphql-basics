@@ -5,7 +5,7 @@ const inputTypes = `
     age: Int
   }
 
-  input CreatePostInput {
+  input CreateDiscussionInput {
     title: String!
     body: String!
     published: Boolean!
@@ -15,7 +15,7 @@ const inputTypes = `
   input CreateCommentInput {
     text: String!
     author: ID!
-    post: ID!
+    discussion: ID!
   }
 `;
 
