@@ -62,7 +62,7 @@ const mutationResolvers = {
 
       return discussion;
     },
-    createComment(parent, args, ctx, info) {
+    createRootComment(parent, args, ctx, info) {
       const { text, author, discussion } = args.data;
 
       if (!text || !author || !discussion) {
@@ -74,6 +74,25 @@ const mutationResolvers = {
       const comment = {
         id: uuidv4(),
         ...args.data
+      };
+
+      comments.push(comment);
+      return comment;
+    },
+    createChildComment(parent, args, ctx, info) {
+      const { text, author, discussion } = args.data;
+      const parentCommentId = parent.id;
+
+      if (!text || !author || !discussion) {
+        throw new Error("Invalid arguments to createComment");
+      }
+      checkThatUserExists(author);
+      checkThatDiscussionExists(discussion);
+
+      const comment = {
+        id: uuidv4(),
+        ...args.data,
+        parentCommentId
       };
 
       comments.push(comment);

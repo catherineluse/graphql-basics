@@ -18,6 +18,12 @@ const resolvers = {
         );
       });
     },
+    discussion(parent, args, ctx, info) {
+      if (!args.id) {
+        return new Error("Must provide a discussion ID");
+      }
+      return discussions.find(discussion => discussion.id == args.id);
+    },
     users(parent, args, ctx, info) {
       if (!args.query) {
         return users;

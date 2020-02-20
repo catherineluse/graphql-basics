@@ -2,6 +2,16 @@ import users from "../../data/users";
 import discussions from "../../data/discussions";
 import comments from "../../data/comments";
 
+const getCommentById = id => {
+  const res = comments.find(comment => {
+    return comment.id === id;
+  });
+  if (!res) {
+    throw new Error("Could not find comment by ID.");
+  }
+  return res;
+};
+
 const commentResolvers = {
   Comment: {
     author(parent, args, ctx, info) {
@@ -18,21 +28,11 @@ const commentResolvers = {
       let childIds = parent.childComments;
 
       if (!parent || !childIds) {
-        return null;
+        return [];
       }
-
-      let children = [];
-
-      childIds.forEach(id => {
-        for (let i = 0; i < comments.length; i++) {
-          let comment = comments[i];
-          if (comment.id === id) {
-            children.push(comment);
-            return;
-          }
-        }
+      return childIds.map(id => {
+        return getCommentById(id);
       });
-      return children;
     }
   }
 };

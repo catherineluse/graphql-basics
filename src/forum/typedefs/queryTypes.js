@@ -2,6 +2,7 @@ const queryTypes = `
 type Query {
     users(query: String): [User!]!
     discussions(query: String): [Discussion!]!
+    discussion(id: ID!): Discussion!
     comments(query: String): [Comment!]!
 }
 
@@ -20,7 +21,7 @@ type Discussion {
   body: String!
   published: Boolean!
   author: User!
-  comments: [Comment]!
+  rootComments: [Comment]!
 }
 
 type Comment {
@@ -29,7 +30,7 @@ type Comment {
   author: User!
   discussion: Discussion!
   parentCommentId: ID
-  childComments: [Comment]
+  childComments: [Comment]!
 }
 `;
 
