@@ -1,8 +1,6 @@
 import queryResolvers from "../Query";
 import db from "../../../db/index";
 
-console.log("db is " + db);
-
 const allTestDiscussions = [
   {
     id: "1",
@@ -43,3 +41,16 @@ const allTestDiscussions = [
 //     });
 // });
 // });
+
+function sum(a, b) {
+  return a + b;
+}
+
+describe('addition', () => {
+  describe('when adding two numbers', () => {
+    it('returns the sum', ()=>{
+      expect(5).toEqual(sum(2,3))
+    })
+  })
+})
+module.exports = sum;
