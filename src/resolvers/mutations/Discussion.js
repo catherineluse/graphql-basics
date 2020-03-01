@@ -18,14 +18,34 @@ const Discussion = {
 
     return discussion;
   },
-  deleteDiscussion(parent, args, { db }, info) {
-    const discussionIndex = db.posts.findIndex(post => post.id === args.id);
+  updateDiscussion(parent, args, { db }, info){
+    const { id, data } = args;
+    const { title, body, published } = data;
+    console.log("discussions are ", db.discussions)
+    const discussionIndex = db.discussions.findIndex(discussion => discussion.id === id);
+    const discussion = db.discussions[discussionIndex];
 
-    if (discussionIndex === -1) {
-      throw new Error("Could not find post by ID in deletePost");
+    if (typeof title === 'string') {
+      discussion.title = title;
     }
 
-    const deletedDiscussion = db.posts.splice(postIndex, 1);
+    if (typeof body === 'string') {
+      discussion.body = body;
+    }
+
+    if (typeof published === 'boolean') {
+      discussion.published = published
+    }
+    return discussion
+  },
+  deleteDiscussion(parent, args, { db }, info) {
+    const discussionIndex = db.discussions.findIndex(discussion => discussion.id === discussion.id);
+
+    if (discussionIndex === -1) {
+      throw new Error("Could not find discussion by ID in deleteDiscussion");
+    }
+
+    const deletedDiscussion = db.discussions.splice(discussionIndex, 1);
 
     removeCommentsByDiscussionId(args.id, db);
 

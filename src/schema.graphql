@@ -27,13 +27,13 @@ input UpdateDiscussionInput {
 input CreateCommentInput {
   text: String!
   authorId: ID!
-  discussion: ID!
+  discussionId: ID!
 }
 
 input UpdateCommentInput {
   text: String
   authorId: ID
-  discussion: ID
+  discussionId: ID
 }
 
 type Mutation {
