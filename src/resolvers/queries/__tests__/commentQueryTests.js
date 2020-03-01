@@ -38,12 +38,12 @@ describe("Comment queries", () => {
   describe("Comment.childComments", () => {
     describe("if the comment has no children", () => {
       it("returns an empty array", () => {
-
+        fail();
       })
     })
     describe("if the comment has children", () => {
       it("returns an array of comments with the right parent comment ID", () => {
-
+        fail();
       })
     })
     
@@ -51,13 +51,19 @@ describe("Comment queries", () => {
 
   describe("Comment.authorId", () => {
     describe("if the comment does not have an author", () => {
-      it("errors out", () => {})
+      it("errors out", () => {
+        fail();
+      })
     })
     describe("if the author ID is not in the database", () => {
-      it("errors out", () => {})
+      it("errors out", () => {
+        fail();
+      })
     })
     describe("if the author ID is valid", () => {
-      it("returns an array of one author", () => {})
+      it("returns an array of one author", () => {
+        fail();
+      })
     })
   })
 

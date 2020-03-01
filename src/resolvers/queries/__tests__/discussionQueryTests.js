@@ -38,17 +38,19 @@ describe("Discussion queries", () => {
   describe("Discussion.getRootComments", () => {
     describe("if the discussion has no comments", () => {
       it("returns an empty array", () => {
-
+         const expected = s([])
+         const res = queryResolvers.Query.getDiscussion({}, {id: '2'}, { db })
+         expect(s(res)).toEqual(s([]))
       })
     })
     describe("if the discussion has comments", () => {
       it("returns an array of comments", () => {
-
+        fail();
       })
     })
     describe("if the discussion has nested comments", () => {
       it("returns only comments without a parent comment ID", () => {
-
+        fail();
       })
     })
   })
@@ -56,15 +58,21 @@ describe("Discussion queries", () => {
   describe("Discussion.authorId", () => {
 
     describe("if the discussion does not have an author", () => {
-      it("errors out", () => {})
+      it("errors out", () => {
+        fail();
+      })
     })
     
     describe("if the author ID is not in the database", () => {
-      it("errors out", () => {})
+      it("errors out", () => {
+        fail();
+      })
     })
     
     describe("if the author ID is valid", () => {
-      it("returns an array of one author", () => {})
+      it("returns an array of one author", () => {
+        fail();
+      })
     })
   })
 });

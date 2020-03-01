@@ -37,12 +37,12 @@ describe("User queries", () => {
   describe("User.posts", () => {
     describe("if the user authored posts", () => {
       it("returns an array of their posts", () => {
-        
+        fail();
       })
     })
     describe("if the user did not author posts", () => {
       it("returns an empty array", () => {
-
+        fail();
       })
     })
   })
@@ -50,12 +50,12 @@ describe("User queries", () => {
   describe("User.comments", () => {
     describe("if the user authored comments", () => {
       it("returns an array of their comments", () => {
-        
+        fail();
       })
     })
     describe("if the user did not author comments", () => {
       it("returns an empty array", () => {
-        
+        fail();
       })
     })
   })
