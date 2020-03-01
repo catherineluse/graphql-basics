@@ -40,6 +40,26 @@ const Comment = {
     db.comments.push(comment);
     return comment;
   },
+  updateComment(parent, args, { db }, info) {
+    const id = args.id;
+    const { text } = args.data;
+    
+    if (!text) {
+      return;
+    }
+
+    let commentIndex = db.comments.findIndex( comment => comment.id === id);
+
+    if (commentIndex === -1) {
+      throw new Error("Could not find comment by ID in updateComment");
+    }
+
+    let comment = db.comments[commentIndex];
+
+    comment.text = text;
+
+    return comment;
+  },
   deleteComment(parent, args, { db }, info) {
     const commentIndex = db.comments.findIndex(
       comment => comment.id === args.id
