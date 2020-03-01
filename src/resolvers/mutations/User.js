@@ -1,6 +1,21 @@
 import uuidv4 from "uuid/v4";
 import { removeDiscussionsByUserId, removeCommentsByUserId } from "./utils";
 
+const emailTaken = (db, email) => {
+  db.users.some(user => {
+    return user.email === email;
+  });
+}
+
+const getUserIndex = (db, id) => {
+  const userIndex = db.users.findIndex(user => user.id === id);
+  console.log("looking for id ", id)
+  if (userIndex === -1) {
+    throw new Error("User not found");
+  }
+  return userIndex;
+}
+
 const User = {
   createUser(parent, args, { db }, info) {
     const { name, email } = args.data;
@@ -9,11 +24,7 @@ const User = {
       throw new Error("Invalid arguments to createUser");
     }
 
-    const emailTaken = db.users.some(user => {
-      return user.email === email;
-    });
-
-    if (emailTaken) {
+    if (emailTaken(db, email)) {
       throw new Error("Email taken.");
     }
 
@@ -28,18 +39,34 @@ const User = {
 
     return user;
   },
-  deleteUser(parent, args, { db }, info) {
-    const userIndex = db.users.findIndex(user => user.id === args.id);
+  updateUser(parents, args, { db }, info) {
+    const { id, data } = args;
+    const { name, email, age } = data;
+    const userIndex = getUserIndex(db, id);
+    const user = db.users[userIndex];
 
-    if (userIndex === -1) {
-      throw new Error("Couldn't find user by ID in deleteUser");
+    if (typeof email === 'string') {
+      if (emailTaken(db, email)) {
+        throw new Error("Email taken.");
+      }
+      user.email = email;
     }
 
-    const deletedUser = db.users.splice(userIndex, 1);
+    if (typeof age === null || typeof age === "integer") {
+      user.age = age;
+    }
 
+    if (typeof name === 'string') {
+      user.name = name;
+    }
+    return user
+  },
+  deleteUser(parent, args, { db }, info) {
+    const { id } = args;
+    const userIndex = getUserIndex(db, id);
+    const deletedUser = db.users.splice(userIndex, 1);
     removeDiscussionsByUserId(id, db);
     removeCommentsByUserId(id, db);
-
     return deletedUser[0];
   }
 };

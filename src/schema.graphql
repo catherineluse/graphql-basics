@@ -4,11 +4,24 @@ input CreateUserInput {
   age: Int
 }
 
+input UpdateUserInput {
+  name: String
+  email: String
+  age: Int
+}
+
 input CreateDiscussionInput {
   title: String!
   body: String!
   published: Boolean!
   authorId: ID!
+}
+
+input UpdateDiscussionInput {
+  title: String
+  body: String
+  published: Boolean
+  authorId: ID
 }
 
 input CreateCommentInput {
@@ -17,23 +30,34 @@ input CreateCommentInput {
   discussion: ID!
 }
 
+input UpdateCommentInput {
+  text: String
+  authorId: ID
+  discussion: ID
+}
+
 type Mutation {
-  createUser(data: CreateUserInput): User!
-  createDiscussion(data: CreateDiscussionInput): Discussion!
-  createRootComment(data: CreateCommentInput): Comment!
-  createChildComment(data: CreateCommentInput): Comment!
-  deleteComment(id: ID): Comment!
-  deleteUser(id: ID): User!
-  deleteDiscussion(id: ID): Discussion!
+  createUser(data: CreateUserInput!): User!
+  updateUser(id: ID!, data:UpdateUserInput!): User!
+  deleteUser(id: ID!): User!
+
+  createDiscussion(data: CreateDiscussionInput!): Discussion!
+  updateDiscussion(id: ID!, data: UpdateDiscussionInput!): Discussion!
+  deleteDiscussion(id: ID!): Discussion!
+
+  createRootComment(data: CreateCommentInput!): Comment!
+  createChildComment(data: CreateCommentInput!): Comment!
+  updateComment(id: ID!, data:UpdateCommentInput!): Comment!
+  deleteComment(id: ID!): Comment!
 }
 
 type Query {
   users(query: String): [User!]!
   discussions(query: String): [Discussion!]!
   comments(query: String): [Comment!]!
-  getDiscussion(id: ID): Discussion!
-  getUser(id: ID): User!
-  getComment(id: ID): Comment!
+  getDiscussion(id: ID!): Discussion!
+  getUser(id: ID!): User!
+  getComment(id: ID!): Comment!
 }
 
 type User {
