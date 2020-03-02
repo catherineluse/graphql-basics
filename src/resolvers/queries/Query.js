@@ -1,6 +1,7 @@
 import Comment from "./Comment";
 import Discussion from "./Discussion";
 import User from "./User";
+import Message from './Message';
 
 const Query = {
   Query: {
@@ -31,6 +32,9 @@ const Query = {
         return ele.text.indexOf(args.query) !== -1;
       });
     },
+    messages(parent, args, { db }, info) {
+      return db.messages;
+    },
     getDiscussion(parent, args, { db }, info) {
       if (!args.id) {
         return new Error("Must provide a discussion ID");
@@ -48,6 +52,12 @@ const Query = {
         return new Error("Must provide a comment ID");
       }
       return db.comments.find(comment => comment.id === args.id);
+    },
+    getMessage(parent, args, { db }, info) {
+      if (!args.id) {
+        return new Error("Must provide a message ID");
+      }
+      return db.messages.find(message => message.id === args.id)
     }
   }
 };
@@ -56,7 +66,8 @@ const queryResolvers = {
   ...Query,
   ...Comment,
   ...Discussion,
-  ...User
+  ...User,
+  ...Message
 };
 
 export default queryResolvers;

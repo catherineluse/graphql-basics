@@ -9,6 +9,16 @@ const User = {
       return db.comments.filter(comment => {
         return comment.authorId === parent.id;
       });
+    },
+    sentMessages(parent, args, { db }, info) {
+      return db.messages.filter(message => {
+        return message.authorId === parent.id;
+      })
+    },
+    receivedMessages(parent, args, { db }, info) {
+      return db.messages.filter(message => {
+        message.recipientId === parent.id;
+      })
     }
   }
 };

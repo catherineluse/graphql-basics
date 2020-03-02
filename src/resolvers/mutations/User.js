@@ -30,9 +30,7 @@ const User = {
 
     const user = {
       id: uuidv4(),
-      ...args.data,
-      comments: [],
-      discussions: []
+      ...args.data
     };
 
     db.users.push(user);

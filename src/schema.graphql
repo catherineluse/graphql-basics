@@ -36,6 +36,18 @@ input UpdateCommentInput {
   discussionId: ID
 }
 
+input CreateMessageInput {
+  text: String!
+  authorId: ID!
+  recipientId: ID!
+  createdDate: String!
+}
+
+input UpdateMessageInput {
+  text: String
+  updatedDate: String!
+}
+
 type Mutation {
   createUser(data: CreateUserInput!): User!
   updateUser(id: ID!, data:UpdateUserInput!): User!
@@ -49,15 +61,21 @@ type Mutation {
   createChildComment(data: CreateCommentInput!): Comment!
   updateComment(id: ID!, data:UpdateCommentInput!): Comment!
   deleteComment(id: ID!): Comment!
+
+  createMessage(data: CreateMessageInput!): Message!
+  updateMessage(data: UpdateMessageInput!): Message!
+  deleteMessage(data: ID!): Message!
 }
 
 type Query {
   users(query: String): [User!]!
   discussions(query: String): [Discussion!]!
   comments(query: String): [Comment!]!
+  messages: [Message!]!
   getDiscussion(id: ID!): Discussion!
   getUser(id: ID!): User!
   getComment(id: ID!): Comment!
+  getMessage(id: ID!): Message!
 }
 
 type User {
@@ -65,8 +83,10 @@ type User {
   name: String!
   email: String!
   age: Int
-  discussions: [Discussion]!
-  comments: [Comment]!
+  discussions: [Discussion]
+  comments: [Comment]
+  sentMessages: [Message]
+  receivedMessages: [Message]
 }
 
 type Discussion {
@@ -85,4 +105,13 @@ type Comment {
   discussionId: Discussion!
   parentCommentId: ID
   childComments: [Comment]!
+}
+
+type Message {
+  id: ID!
+  text: String!
+  authorId: User!
+  recipientId: User!
+  createdDate: String!
+  updatedDate: String
 }
