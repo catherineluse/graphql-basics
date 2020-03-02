@@ -40,12 +40,10 @@ input CreateMessageInput {
   text: String!
   authorId: ID!
   recipientId: ID!
-  createdDate: String!
 }
 
 input UpdateMessageInput {
   text: String
-  updatedDate: String!
 }
 
 type Mutation {
@@ -63,8 +61,8 @@ type Mutation {
   deleteComment(id: ID!): Comment!
 
   createMessage(data: CreateMessageInput!): Message!
-  updateMessage(data: UpdateMessageInput!): Message!
-  deleteMessage(data: ID!): Message!
+  updateMessage(id: ID!, data: UpdateMessageInput!): Message!
+  deleteMessage(id: ID!): Message!
 }
 
 type Query {
