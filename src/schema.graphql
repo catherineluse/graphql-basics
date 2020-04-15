@@ -76,6 +76,10 @@ type Query {
   getMessage(id: ID!): Message!
 }
 
+type Subscription {
+  count: Int!
+}
+
 type User {
   id: ID!
   name: String!
