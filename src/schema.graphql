@@ -78,6 +78,7 @@ type Query {
 
 type Subscription {
   count: Int!
+  comment(discussionId: ID!): Comment!
 }
 
 type User {

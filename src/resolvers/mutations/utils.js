@@ -45,6 +45,16 @@ const checkThatDiscussionExists = (id, db) => {
   }
 };
 
+const checkThatCommentExists = (id, db) => {
+  const commentExists = db.comments.some(
+    comment => comment.id === id
+  );
+
+  if (!commentExists) {
+    throw new Error("Comment not found")
+  }
+}
+
 module.exports = {
   removeCommentsByDiscussionId,
   removeCommentsByUserId,

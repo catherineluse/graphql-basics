@@ -16,6 +16,17 @@ const Subscription = {
 
         return pubsub.asyncIterator('count')
       }
+  },
+  comment: {
+    subscribe(parent, { discussionId }, { db, pubsub }, info){
+        const discussion = db.discussions.find((discussion) => discussion.id === discussionId && discussion.published)
+
+        if(!discussion) {
+          throw new Error('Discussion not found')
+        }
+
+        return pubsub.asyncIterator(`comment in discussion ${discussionId}`) // comment 44
+      }
   }
 }
 

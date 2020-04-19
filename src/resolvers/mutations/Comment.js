@@ -1,12 +1,17 @@
 import uuidv4 from "uuid/v4";
-import { checkThatUserExists, checkThatDiscussionExists } from "./utils";
+import { 
+  checkThatUserExists, 
+  checkThatDiscussionExists, 
+  checkThatCommentExists 
+} from "./utils";
+import { pubsub } from "graphql-yoga";
 
 const Comment = {
-  createRootComment(parent, args, { db }, info) {
+  createRootComment(parent, args, { db, pubsub }, info) {
     const { text, authorId, discussionId } = args.data;
 
     if (!text || !authorId || !discussionId) {
-      throw new Error("Invalid arguments to createComment");
+      throw new Error("Invalid arguments to createRootComment");
     }
     checkThatUserExists(authorId, db);
     checkThatDiscussionExists(discussionId, db);
@@ -18,17 +23,20 @@ const Comment = {
     };
 
     db.comments.push(comment);
+    pubsub.publish(`comment in discussion ${discussionId}`, { comment })
     return comment;
   },
-  createChildComment(parent, args, { db }, info) {
+
+  createChildComment(parent, args, { db, PubSub }, info) {
     const { text, authorId, discussionId } = args.data;
     const parentCommentId = parent.id;
 
-    if (!text || !authorId || !discussionId) {
+    if (!text || !authorId || !discussionId || !parentCommentId) {
       throw new Error("Invalid arguments to createComment");
     }
     checkThatUserExists(authorId, db);
     checkThatDiscussionExists(discussionId, db);
+    checkThatParentCommentExists(parentCommentId, db);
 
     const comment = {
       id: uuidv4(),
@@ -38,8 +46,10 @@ const Comment = {
     };
 
     db.comments.push(comment);
+    pubsub.publish(`comment in discussion ${discussionId}`, { comment })
     return comment;
   },
+
   updateComment(parent, args, { db }, info) {
     const id = args.id;
     const { text } = args.data;
@@ -60,6 +70,7 @@ const Comment = {
 
     return comment;
   },
+
   deleteComment(parent, args, { db }, info) {
     const commentIndex = db.comments.findIndex(
       comment => comment.id === args.id

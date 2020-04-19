@@ -61,3 +61,12 @@ describe("User queries", () => {
   })
  
 });
+
+
+// query {
+//   users {
+//     name
+//     id 
+//     email
+//   }
+// }
