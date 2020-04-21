@@ -102,8 +102,8 @@ type Query {
 type Subscription {
   count: Int!
   comment(discussionId: ID!): Comment!
-  # discussion(communityId: ID!): Discussion!
-  # message(recipientId: ID!): Message!
+  discussion(communityId: ID!): Discussion!
+  message(recipientId: ID!): Message!
 }
 
 type User {

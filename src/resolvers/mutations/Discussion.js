@@ -4,6 +4,7 @@ import {
   removeCommentsByDiscussionId,
   checkThatCommunityExists
 } from "./utils";
+import { pubsub } from "graphql-yoga";
 
 const Discussion = {
   createDiscussion(parent, args, { db }, info) {
@@ -20,7 +21,7 @@ const Discussion = {
     };
 
     db.discussions.push(discussion);
-    console.log("create discussion ran")
+    pubsub.publish(`discussion in community ${communityId}`, { discussion })
     return discussion;
   },
   updateDiscussion(parent, args, { db }, info){
