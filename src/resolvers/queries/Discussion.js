@@ -10,6 +10,12 @@ const Discussion = {
       return db.users.find(user => {
         return user.id === parent.authorId;
       });
+    },
+
+    communityId(parent, args, { db }, info) {
+      return db.communities.find(community => {
+        return community.id === parent.communityId;
+      });
     }
   }
 };

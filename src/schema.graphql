@@ -12,6 +12,7 @@ input UpdateUserInput {
 
 input CreateDiscussionInput {
   title: String!
+  communityId: ID!
   body: String!
   published: Boolean!
   authorId: ID!
@@ -46,6 +47,19 @@ input UpdateMessageInput {
   text: String
 }
 
+input CreateCommunityInput {
+  creatorId: ID!
+  url: String!
+  name: String!
+  description: String
+  createdDate: String!
+}
+
+input UpdateCommunityInput {
+  name: String
+  description: String
+}
+
 type Mutation {
   createUser(data: CreateUserInput!): User!
   updateUser(id: ID!, data:UpdateUserInput!): User!
@@ -63,22 +77,33 @@ type Mutation {
   createMessage(data: CreateMessageInput!): Message!
   updateMessage(id: ID!, data: UpdateMessageInput!): Message!
   deleteMessage(id: ID!): Message!
+
+  createCommunity(data: CreateCommunityInput!): Community!
+  updateCommunity(id: ID!, data: UpdateCommunityInput!): Community!
+  deleteCommunity(id: ID!): Community!
 }
 
 type Query {
+
   users(query: String): [User!]!
   discussions(query: String): [Discussion!]!
   comments(query: String): [Comment!]!
   messages: [Message!]!
+  communities: [Community!]!
+
   getDiscussion(id: ID!): Discussion!
   getUser(id: ID!): User!
   getComment(id: ID!): Comment!
   getMessage(id: ID!): Message!
+  getCommunity(id: ID!): Community!
+
 }
 
 type Subscription {
   count: Int!
   comment(discussionId: ID!): Comment!
+  # discussion(communityId: ID!): Discussion!
+  # message(recipientId: ID!): Message!
 }
 
 type User {
@@ -94,6 +119,7 @@ type User {
 
 type Discussion {
   id: ID!
+  communityId: Community!
   title: String!
   body: String!
   published: Boolean!
@@ -117,4 +143,14 @@ type Message {
   recipientId: User!
   createdDate: String!
   updatedDate: String
+}
+
+type Community {
+  id: ID!
+  creatorId: User!
+  url: String!
+  name: String!
+  description: String
+  createdDate: String!
+  discussions: [Discussion]!
 }

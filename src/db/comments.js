@@ -18,14 +18,14 @@ const comments = [
   {
     id: "2",
     text: "sweet",
-    authorId: "3",
+    authorId: "1",
     discussionId: "1",
     childComments: []
   },
   {
     id: "3",
     text: "dude",
-    authorId: "2",
+    authorId: "1",
     discussionId: "3",
     childComments: []
   },
@@ -46,7 +46,7 @@ const comments = [
   {
     id: "6",
     text: "Child comment",
-    authorId: "3",
+    authorId: "2",
     discussionId: "3",
     parentCommentId: "5",
     childComments: ["8"]
@@ -54,7 +54,7 @@ const comments = [
   {
     id: "7",
     text: "Sibling of child comment",
-    authorId: "2",
+    authorId: "1",
     discussionId: "3",
     parentCommentId: "5",
     childComments: []
@@ -63,7 +63,7 @@ const comments = [
     id: "8",
     text: "Grandchild comment",
     authorId: "1",
-    discussionId: "5",
+    discussionId: "3",
     parentCommentId: "6",
     childComments: []
   }

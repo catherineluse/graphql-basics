@@ -1,13 +1,18 @@
 import uuidv4 from "uuid/v4";
-import { checkThatUserExists, removeCommentsByDiscussionId } from "./utils";
+import { 
+  checkThatUserExists, 
+  removeCommentsByDiscussionId,
+  checkThatCommunityExists
+} from "./utils";
 
 const Discussion = {
   createDiscussion(parent, args, { db }, info) {
-    const { authorId, title, body, published } = args.data;
-    if (!authorId || !title || !body || published === undefined) {
+    const { authorId, communityId, title, body, published } = args.data;
+    if (!authorId || !communityId || !title || !body || published === undefined) {
       throw new Error("Invalid arguments passed to createDiscussion");
     }
     checkThatUserExists(authorId, db);
+    checkThatCommunityExists(communityId, db)
 
     const discussion = {
       id: uuidv4(),
@@ -15,7 +20,7 @@ const Discussion = {
     };
 
     db.discussions.push(discussion);
-
+    console.log("create discussion ran")
     return discussion;
   },
   updateDiscussion(parent, args, { db }, info){
@@ -44,10 +49,9 @@ const Discussion = {
     if (discussionIndex === -1) {
       throw new Error("Could not find discussion by ID in deleteDiscussion");
     }
+    removeCommentsByDiscussionId(args.id, db);
 
     const deletedDiscussion = db.discussions.splice(discussionIndex, 1);
-
-    removeCommentsByDiscussionId(args.id, db);
 
     return deletedDiscussion[0];
   }

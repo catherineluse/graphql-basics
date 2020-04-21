@@ -4,21 +4,24 @@ const discussions = [
     title: "cat discussion",
     body: "cats cats cats",
     published: true,
-    authorId: "1"
+    authorId: "1",
+    communityId: "1"
   },
   {
     id: "2",
     title: "dog discussion",
     body: "dogs only",
     published: true,
-    authorId: "1"
+    authorId: "1",
+    communityId: "2"
   },
   {
     id: "3",
     title: "special discussion",
     body: "secret",
     published: false,
-    authorId: "2"
+    authorId: "2",
+    communityId: "1"
   }
 ];
 

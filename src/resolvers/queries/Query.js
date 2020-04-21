@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import Discussion from "./Discussion";
 import User from "./User";
 import Message from './Message';
+import Community from './Community';
 
 const Query = {
   Query: {
@@ -35,6 +36,9 @@ const Query = {
     messages(parent, args, { db }, info) {
       return db.messages;
     },
+    communities(parent, args, { db }, info) {
+      return db.communities;
+    },
     getDiscussion(parent, args, { db }, info) {
       if (!args.id) {
         return new Error("Must provide a discussion ID");
@@ -58,6 +62,12 @@ const Query = {
         return new Error("Must provide a message ID");
       }
       return db.messages.find(message => message.id === args.id)
+    },
+    getCommunity(parent, args, { db }, info) {
+      if (!args.id) {
+        return new Error("Must provide a community ID");
+      }
+      return db.communities.find(community => community.id === args.id)
     }
   }
 };
@@ -67,7 +77,8 @@ const queryResolvers = {
   ...Comment,
   ...Discussion,
   ...User,
-  ...Message
+  ...Message,
+  ...Community
 };
 
 export default queryResolvers;

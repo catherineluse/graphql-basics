@@ -4,9 +4,6 @@ import mutationResolvers from "./resolvers/mutations/Mutation";
 import Subscription from './resolvers/Subscription';
 import db from "./db";
 
-console.log(" query resolvers are ", queryResolvers);
-console.log(" mutation resolvers are ", mutationResolvers);
-
 const pubsub = new PubSub();
 
 const resolvers = {

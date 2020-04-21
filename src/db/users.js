@@ -7,12 +7,6 @@ const users = [
   },
   {
     id: "2",
-    name: "zack",
-    email: "zackofalltrades@gmail.com",
-    age: 32
-  },
-  {
-    id: "3",
     name: "autumn",
     email: "autumn@discoverywritten.com"
   }

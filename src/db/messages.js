@@ -9,7 +9,7 @@ const messages = [
     {
       id: "2",
       text: "Sup",
-      authorId: "3",
+      authorId: "2",
       recipientId: "1",
       createdDate: "February 28, 2020",
       updatedDate: "March 1, 2020"

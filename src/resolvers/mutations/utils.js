@@ -1,11 +1,3 @@
-const removeCommentsByDiscussionId = (id, db) => {
-  db.comments = db.comments.filter(comment => {
-    // Keep only comments that don't
-    // belong to this post.
-    return comment.discussionId !== id;
-  });
-};
-
 const removeCommentsByUserId = (id, db) => {
   db.comments = db.comments.filter(comment => {
     // Keep only comments that aren't
@@ -45,20 +37,55 @@ const checkThatDiscussionExists = (id, db) => {
   }
 };
 
-const checkThatCommentExists = (id, db) => {
-  const commentExists = db.comments.some(
-    comment => comment.id === id
+const checkThatCommunityExists = (id, db) => {
+  const communityExists = db.communities.some(
+    community => community.id === id
   );
 
-  if (!commentExists) {
-    throw new Error("Comment not found")
+  if (!communityExists) {
+    throw new Error("Community not found");
   }
+};
+
+const checkThatCommunityDoesNotExist = (id, db) => {
+  const communityExists = db.communities.some(
+    community => community.id === id
+  );
+
+  if (communityExists) {
+    throw new Error("Community already exists");
+  }
+};
+
+const removeDiscussionsByCommunityId = (id, db) => {
+  checkThatCommunityExists(id, db)
+
+  const discussions = db.discussions.filter(discussion => {
+    console.log('discussion\'s community ID is ' + discussion.communityId)
+    return discussion.communityId === id
+  })
+  
+  for (let i = 0; i < discussions.length; i++){
+    const discussion = discussions[i]
+    const discussionId = discussion.id
+    console.log('discussion is ', discussion)
+
+    db.comments = db.comments.filter(comment => {
+      return comment.discussionId !== discussionId;
+    })
+  }
+  
+  db.discussions = db.discussions.filter(discussion => {
+    return discussion.communityId !== id;
+  });
 }
 
 module.exports = {
-  removeCommentsByDiscussionId,
   removeCommentsByUserId,
   removeDiscussionsByUserId,
   checkThatUserExists,
-  checkThatDiscussionExists
+  checkThatDiscussionExists,
+  checkThatCommunityExists,
+  checkThatCommunityDoesNotExist,
+  removeDiscussionsByCommunityId
 };
