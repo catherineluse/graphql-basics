@@ -100,9 +100,8 @@ type Query {
 }
 
 type Subscription {
-  count: Int!
-  comment(discussionId: ID!): Comment!
-  discussion(communityId: ID!): Discussion!
+  comment(discussionId: ID!): CommentSubscriptionPayload!
+  discussion(communityId: ID!): PostSubscriptionPayload!
   message(recipientId: ID!): Message!
 }
 
@@ -153,4 +152,20 @@ type Community {
   description: String
   createdDate: String!
   discussions: [Discussion]!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type PostSubscriptionPayload {
+  mutation: MutationType!
+  data: Discussion!
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  data: Comment!
 }

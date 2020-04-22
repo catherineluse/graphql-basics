@@ -7,14 +7,13 @@
 
 import uuidv4 from "uuid/v4";
 import { checkThatUserExists } from "./utils";
-import { pubsub } from "graphql-yoga";
 
 const publishMessage = (recipientId, message) => {
   pubsub.publish(`message for recipient ${recipientId}`, { message })
 }
 
 const Message = {
-  createMessage(parent, args, { db }, info) {
+  createMessage(parent, args, { db, pubsub }, info) {
     const { text, authorId, recipientId } = args.data;
 
     if (!text || !authorId || !recipientId ) {

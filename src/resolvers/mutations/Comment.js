@@ -23,7 +23,11 @@ const Comment = {
     };
 
     db.comments.push(comment);
-    pubsub.publish(`comment in discussion ${discussionId}`, { comment })
+    pubsub.publish(`comment in discussion ${discussionId}`, { 
+      comment: {
+        mutation: 'CREATED',
+        data: comment
+      }})
     return comment;
   },
 
@@ -46,11 +50,15 @@ const Comment = {
     };
 
     db.comments.push(comment);
-    pubsub.publish(`comment in discussion ${discussionId}`, { comment })
+    pubsub.publish(`comment in discussion ${discussionId}`, { 
+      comment: {
+        mutation: 'CREATED',
+        data: comment
+      }})
     return comment;
   },
 
-  updateComment(parent, args, { db }, info) {
+  updateComment(parent, args, { db, pubsub }, info) {
     const id = args.id;
     const { text } = args.data;
     
@@ -68,10 +76,17 @@ const Comment = {
 
     comment.text = text;
 
+    pubsub.publish(`comment in discussion ${comment.discussionId}`, {
+      comment: {
+        mutation: 'UPDATED',
+        data: comment
+      }
+    })
+
     return comment;
   },
 
-  deleteComment(parent, args, { db }, info) {
+  deleteComment(parent, args, { db, pubsub }, info) {
     const commentIndex = db.comments.findIndex(
       comment => comment.id === args.id
     );
@@ -80,9 +95,15 @@ const Comment = {
       throw new Error("Could not find comment by ID in deleteComment");
     }
 
-    const deletedComment = db.comments.splice(commentIndex, 1);
-
-    return deletedComment[0];
+    const [ deletedComment ] = db.comments.splice(commentIndex, 1);
+    
+    pubsub.publish(`comment in discussion ${deletedComment.discussionId}`, {
+      comment: {
+        mutation: 'DELETED',
+        data: deletedComment
+      }
+    })
+    return deletedComment;
   }
 };
 

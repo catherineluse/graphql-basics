@@ -19,7 +19,7 @@ const discussions = [
     id: "3",
     title: "special discussion",
     body: "secret",
-    published: false,
+    published: true,
     authorId: "2",
     communityId: "1"
   }

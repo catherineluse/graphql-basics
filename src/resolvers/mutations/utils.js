@@ -6,6 +6,14 @@ const removeCommentsByUserId = (id, db) => {
   });
 };
 
+const removeCommentsByDiscussionId = (id, db) => {
+  db.comments = db.comments.filter(comment => {
+    // Keep only comments that don't
+    // belong to a certain discussion.
+    return comment.discussionId !== id;
+  });
+};
+
 const removeDiscussionsByUserId = (id, db) => {
   db.discussions = db.discussions.filter(discussion => {
     const match = discussion.authorId === id;
@@ -82,6 +90,7 @@ const removeDiscussionsByCommunityId = (id, db) => {
 
 module.exports = {
   removeCommentsByUserId,
+  removeCommentsByDiscussionId,
   removeDiscussionsByUserId,
   checkThatUserExists,
   checkThatDiscussionExists,
