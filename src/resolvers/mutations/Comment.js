@@ -1,8 +1,7 @@
 import uuidv4 from "uuid/v4";
 import { 
   checkThatUserExists, 
-  checkThatDiscussionExists, 
-  checkThatCommentExists 
+  checkThatDiscussionExists
 } from "./utils";
 import { pubsub } from "graphql-yoga";
 
